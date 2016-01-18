@@ -1,5 +1,13 @@
 <?php
-    require 'database.php';
+    require 'Database.php';
+    require 'Auth.php';
+    $pdo = Database::connect();
+    $auth = new Auth($pdo);
+    if(!$auth->isLoggedIn()) {
+        header("Location: index.php");
+        die();
+    }
+
     $id = 0;
      
     if ( !empty($_GET['id'])) {

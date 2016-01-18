@@ -12,9 +12,9 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `username`, `password`)
 VALUES
-	(2,'Greg','newpass3459'),
-	(4,'Monica','monalisa2'),
-	(5,'Ala','makota1');
+  (2,'Greg','newpass3459'),
+  (4,'Monica','monalisa2'),
+  (9,'admin','admin');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
