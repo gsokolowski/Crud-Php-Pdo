@@ -10,7 +10,7 @@
 <body>
     <div class="container">
             <div class="row">
-                <h3>Crud Php Pdo + Authorisation</h3>
+                <h3>Crud Php Pdo + Login</h3>
             </div>
             <?php
                 require 'Database.php';
