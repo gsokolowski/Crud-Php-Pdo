@@ -4,8 +4,8 @@ This is simple Php Crude with authentication.
 Installation
 
 - Clone project
-- Use db.sql to create mysql db user table load example data into user table
-- call index.php and log in with user:admin and pass:admin
+- Create mysql db and run db.sql to create user table and import data
+- Call index.php and use user:admin and pass:admin to get access to CRUD panel
 
 Enjoy!
 
