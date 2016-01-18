@@ -2,15 +2,6 @@
 
 class Auth {
 
-// STEPS
-// ). set session_start() in constructor
-// 1. Connect with db to have access to user table to be able ask for name an pass and check if exist
-// 2. If connection exist take username nad password passed from forms validate
-// 3. Function login() Make a call to db if user exists with this password
-// 4. If exists then username and pass i correct so save username and password in $_SESSION[], session holds user,
-// one session per user
-// 5. Function isLoggedIn() to check if user is logged in $_SESSION[]. If yes then logged in if not the not
-// 6. Function logout() simply remove user session, one session per user and when you distroy session user logged out
 
     private $pdo;
 
