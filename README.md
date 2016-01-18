@@ -1,6 +1,6 @@
 Basic CRUD PHP PDO + Authorisation
 
-This is simple Php Crude with authentication.
+This is simple PHP CRUD with authentication.
 
 Installation
 
