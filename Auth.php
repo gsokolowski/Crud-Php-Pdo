@@ -16,7 +16,7 @@ class Auth {
         }
     }
 
-    public function login(){
+    private function login(){
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
 
@@ -39,7 +39,7 @@ class Auth {
         }
     }
 
-    public function logout() {
+    private function logout() {
         session_unset();
         session_destroy();
         //echo 'session destroyed, user logged out';
