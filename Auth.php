@@ -21,19 +21,20 @@ class Auth {
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
 
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "select * from user WHERE username = '".$_POST['username']. "' and password ='". $_POST['password']."'" ;
+            $sql = "select * from user WHERE username =  '".$_POST['username']."'" ;
             //echo $sql;
             $query = $this->pdo->prepare($sql);
             $query->execute(array());
             $data = $query->fetch(PDO::FETCH_ASSOC);
 
-            //var_dump($data);
             if($data) {
-                $_SESSION['username'] = $data['username'];
-                $_SESSION['password'] = $data['password'];
-                $_SESSION['isUserLoggedIn'] = true;
-                //echo 'user exists, session created';
-                return true;
+                $hashedPassword = $data['password'];
+                if (password_verify($_POST['password'], $hashedPassword)) {
+                    $_SESSION['username'] = $data['username'];
+                    $_SESSION['password'] = $data['password'];
+                    $_SESSION['isUserLoggedIn'] = true;
+                    return true;
+                }
             }
             return false;
         }

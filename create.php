@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <?php
-     
-    require 'database.php';
+
+    require 'Database.php';
+    require 'Auth.php';
+    require 'vendor/autoload.php';
+    use Violin\Violin;
+
+    $pdo = Database::connect();
+    $auth = new Auth($pdo);
+    if(!$auth->isLoggedIn()) {
+        header("Location: index.php");
+        die();
+    }
+
     if ( !empty($_POST)) {
         // keep track validation errors
         $usernameError = null;
         $passwordError = null;
+        $valid = true;
 
         // keep track post values
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        // validate input
-        $valid = true;
-        if (empty($username)) {
-            $usernameError = 'Please enter Username';
+        $v = new Violin;
+        $v->validate([
+            'username'  => [$username, 'required|alpha|min(3)|max(20)'],
+            'password'  => [$password, 'required|alpha|min(3)'],
+        ]);
+
+        if (!$v->passes()) {
+            $usernameError = $v->errors()->get('username')[0];
+            $passwordError = $v->errors()->get('password')[0];
             $valid = false;
         }
 
-        if (empty($password)) {
-            $passwordError = 'Please enter Password';
-            $valid = false;
-        }
+        $options = [
+            "cost" => 12
+        ];
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
 
         // insert data
         if ($valid) {
@@ -29,7 +46,7 @@
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "INSERT INTO user (username, password) values(?, ?)";
             $query = $pdo->prepare($sql);
-            $query->execute(array($username,$password));
+            $query->execute(array($username, $hashedPassword));
             Database::disconnect();
             header("Location: index.php");
         }
@@ -55,7 +72,7 @@
                         <div class="controls">
                             <input name="username" type="text"  placeholder="Username" value="<?php echo !empty($username)?$username:'';?>">
                             <?php if (!empty($usernameError)): ?>
-                                <span class="help-inline"><?php echo $usernameError;?></span>
+                                <span class="help-inline"><?php echo  $usernameError;?></span>
                             <?php endif; ?>
                         </div>
                       </div>
